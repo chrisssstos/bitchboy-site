@@ -1,0 +1,906 @@
+@font-face {
+    font-family: 'BboyFont';
+    src: url(assets/fonts/818e200287506e4a.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'W95FA';
+    src: url(311934e4de220c2f.otf) format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+    overscroll-behavior: none;
+    font-family: 'Nanum Myeongjo', serif;
+    color: #fff;
+    background: #141414;
+    scroll-behavior:smooth;
+    overflow: hidden;
+}
+
+.lds-roller {
+	width: 80px;
+	height: 80px;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+	z-index: 5;
+  }
+  .lds-roller div {
+	animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	transform-origin: 40px 40px;
+  }
+  .lds-roller div:after {
+	content: " ";
+	display: block;
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background:#f9f0ec;
+	margin: -4px 0 0 -4px;
+  }
+  .lds-roller div:nth-child(1) {
+	animation-delay: -0.036s;
+  }
+  .lds-roller div:nth-child(1):after {
+	top: 63px;
+	left: 63px;
+  }
+  .lds-roller div:nth-child(2) {
+	animation-delay: -0.072s;
+  }
+  .lds-roller div:nth-child(2):after {
+	top: 68px;
+	left: 56px;
+  }
+  .lds-roller div:nth-child(3) {
+	animation-delay: -0.108s;
+  }
+  .lds-roller div:nth-child(3):after {
+	top: 71px;
+	left: 48px;
+  }
+  .lds-roller div:nth-child(4) {
+	animation-delay: -0.144s;
+  }
+  .lds-roller div:nth-child(4):after {
+	top: 72px;
+	left: 40px;
+  }
+  .lds-roller div:nth-child(5) {
+	animation-delay: -0.18s;
+  }
+  .lds-roller div:nth-child(5):after {
+	top: 71px;
+	left: 32px;
+  }
+  .lds-roller div:nth-child(6) {
+	animation-delay: -0.216s;
+  }
+  .lds-roller div:nth-child(6):after {
+	top: 68px;
+	left: 24px;
+  }
+  .lds-roller div:nth-child(7) {
+	animation-delay: -0.252s;
+  }
+  .lds-roller div:nth-child(7):after {
+	top: 63px;
+	left: 17px;
+  }
+  .lds-roller div:nth-child(8) {
+	animation-delay: -0.288s;
+  }
+  .lds-roller div:nth-child(8):after {
+	top: 56px;
+	left: 12px;
+  }
+  @keyframes lds-roller {
+	0% {
+	  transform: rotate(0deg);
+	}
+	100% {
+	  transform: rotate(360deg);
+	}
+  }
+
+#loading-text-intro{
+    z-index: 3;
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    font-family: 'Josefin Sans', sans-serif;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 100;
+	color:#f9f0ec;
+	background: radial-gradient(circle at center center,#FF6B00 0,#FF6B00 58%);
+}
+
+#loading-text-intro.ended{
+	transform: translateY(200%);
+}
+
+nav { width: 100%; padding: 1rem; position: fixed;  z-index: 2;}
+
+span {
+	display: inline-block;
+	pointer-events: none;
+	transition: transform 0.1s linear;
+}
+
+.cursor { 
+	pointer-events: none;
+	position: fixed; 
+    top: 10px; 
+    left: 10px;
+	padding: 10px;
+	background-color: #fff;
+	border-radius: 50%; 
+	transform: translate(-50%, -50%);
+	mix-blend-mode: difference;
+	transition: transform .8s ease, opacity 0.6s ease;
+	z-index: 2;
+}
+
+/* .cursor:has(.a:hover){
+    transform: translate(-50%, -50%) scale(4); opacity: 0.3;
+} */
+
+.a { 
+	display: inline-block; 
+	color: #fff; 
+	padding: 1rem;
+    margin-right: 4rem;
+    letter-spacing: .4em;
+    font-size: .9em;
+	transition: all 0.3s ease, color 0.3s ease;
+}
+
+nav.header .a:hover{
+    cursor: pointer;
+    color: rgb(175, 175, 175); 
+    transform: scale(1.1); 
+
+}
+
+nav.header .a:hover ~ .cursor {
+    transform: translate(-50%, -50%) scale(5); opacity: 0.1; 
+}
+
+.dg.ac {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	z-index: 2 !important; /* TODO Solve this in HTML */
+}
+
+#canvas-container{
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    outline: none;
+    z-index: 0;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    background: #FF6B00;
+    background: radial-gradient(circle at center center,#FF6B00 0,#FF6B00 58%);
+}
+
+#canvas-container-details{
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    outline: none;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    pointer-events: all;
+    overflow: hidden;
+}
+
+
+.section{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* display: flex; */
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    padding-left: 5%;
+    padding-right: 5%;
+    z-index: 1;
+    width: 65%;
+    height: 100vh;
+    pointer-events: none;
+}
+
+
+.header {
+    position: absolute;
+    top: -2em;
+    left: 0;
+    color: #fff;
+    font-size: .8em;
+    width: 100%;
+    text-align: center;
+    font-family: 'Josefin Sans', sans-serif;
+    z-index: 2;
+    opacity: 0;
+    transition: all 1.9s ease-in-out ;
+    padding: 0;
+    margin: 0;
+
+}
+.header.ended{
+    top: 3em;
+    opacity: 1;
+}
+
+.header>span {
+    padding: 0 3.25em;
+    letter-spacing: .4em;
+    position: relative;
+    
+}
+
+.header>span.active:after, .first {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate3d(-50%,0,0);
+    transform: translate3d(-50%,0,0);
+}
+
+.header>span.active:after {
+    content: "";
+    bottom: -10px;
+    width: 20px;
+    height: 2px;
+    background: #fff;
+}
+
+.first {
+    pointer-events: none;
+    font-size: 2em;
+    letter-spacing: .5em;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    height: 90vh;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    background: none!important;
+    
+
+    -moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position: relative;
+	z-index: 1;
+    background: linear-gradient(0deg, rgba(5,5,5,1) 0%, rgba(5,5,5,0) 0%);
+
+}
+
+.first>h2 {
+    font-size: 1em;
+    line-height: 0;
+    font-weight: 100;
+    letter-spacing: .25em;
+    font-style: italic;
+    margin: 35px;
+}
+
+.first>h1{
+    font-family: 'BboyFont', sans-serif;
+    font-size: 15em;
+    margin: 0px 10px;
+    font-weight: 100;
+    margin-top: 0px;
+    line-height: 0.2em; /*0.5em*/
+}
+.first .tagline {
+    font-family: 'Josefin Sans', sans-serif; /* Or your preferred font */
+    font-size: 0.9em; /* Adjust the size as needed */
+    font-weight: 300;
+    color: #f9f0ec; /* Match or complement the main text color */
+    margin-top: 10px; /* Space between the main text and the tagline */
+    text-align: center;
+    letter-spacing: 0.2em; /* Optional: Adjust for a more modern look */
+}
+
+@media only screen and (max-width: 660px) {
+
+    
+    .cursor {
+        display: none; /* Hide the custom cursor on mobile */
+    }
+    .first {
+        margin-top: -50px !important; /* Adjust this value to move the section up */
+        background: none;
+    }
+    .first > p {
+        margin-top: 400px !important; /* Move the paragraph down by adding margin at the top */
+        margin-bottom: 0px !important; /* Keep the bottom margin consistent */
+        text-align: center;
+        color: #ababab;
+        
+    }
+
+    .first > h1 {
+        justify-content: center!important; /* Centers horizontally */
+        align-items: center!important;     /* Centers vertically */
+        text-align: center!important;      /* Ensures text alignment is centered */
+        
+        font-size: 10em!important;
+        margin: 0px 10px!important;
+        margin-left: 70px!important;
+        /* line-height: 0.25em!important; */
+      
+    }
+    .first .tagline {
+        font-size: 0.8em!important; /* Adjust font size for mobile */
+        margin-top: 0px!important;
+        margin-bottom: 0px!important; /* Add more space between h1 and tagline */
+        text-align: center!important; /* Ensure the tagline is centered */
+        line-height: 2em!important;
+    }
+
+    .first > p {
+        margin-top: 20px !important; /* Reset margin to keep spacing consistent */
+        margin-bottom: 0px !important; /* Ensure there's some bottom margin as well */
+        text-align: center;
+        color: #ababab;
+    }
+    .about {
+        
+        padding: 50px 5%;
+        margin-top: 100px!important; /* Add margin at the top */
+        margin-bottom: -20px!important; /* Add margin at the top */
+        padding-bottom: -100px !important;
+        text-align: center;
+        background-color: #141414;
+        font-family: sans-serif;
+    }
+
+
+    /* Ensure the loading spinner remains centered */
+    .lds-roller {
+        top: 44.5%; /* Adjust this value to properly align with the loading text */
+    }
+
+
+}
+
+/* .first>h1:after {
+    content: "";
+    position: absolute;
+    margin-top: 0px;
+    left: calc(50% - 25px);
+    width: 50px;
+    height: 2px;
+    background: #ffffff70;
+} */
+
+.first>p{
+    font-size: 13px;
+    letter-spacing: 0px;
+    font-family: sans-serif;
+    width: 700px;
+    
+    font-weight: lighter;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: #ababab;
+    opacity: 50;
+    transition: all 0.9s ease-in-out ;
+}
+
+
+.first>p.ended{
+    opacity: 1;
+}
+
+
+.about {
+    padding: 60px 5%;
+    margin-top: 50px; /* Add margin at the top */
+    text-align: center;
+    background-color: #141414; /* Match the body background or adjust as needed */
+    color: #ababab;
+    font-family: sans-serif;
+}
+
+.about h2 {
+    font-size: 2em;
+    color: #f9f0ec;
+    margin-bottom: 20px;
+}
+
+.about p {
+    font-size: 1em;
+    line-height: 1.6em;
+    margin-top: 0px;
+    margin: 0 auto;
+    max-width: 800px; /* Adjust width as necessary */
+    color: #898989;
+}
+
+
+
+.second{
+    pointer-events: all;
+    font-size: 2em;
+    width: 100%;
+    display: flex;
+    height: 100vh;
+    background: #141414;
+        /* 141414 */
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.second-container{
+    pointer-events: all;
+    width: 100%;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    padding: 0 10%;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+    background: radial-gradient(circle at 90% center, rgba(5,5,5,0) 10%, #141414 60%);
+
+}
+
+.second-container>ul{
+    list-style: none;
+    display: inline-flex;
+    padding: 0px;
+    margin: 0px 0px 30px 60px;
+    font-family: 'DM Serif Display', serif;
+    color:#ffffff1c;
+    z-index: 2;
+}
+
+.second-container>ul>li.active:after {
+    content: "";
+    top: 20px;
+    width: 50px;
+    height: 2px;
+    background: #fff;
+    position: relative;
+    left: 0px;
+    display: block;
+}
+
+
+.second-container>ul>li{
+    padding-right: 20px;
+    transition: all 0.8s ease-out;
+}
+
+.second-container>ul>li:hover{
+    color:whitesmoke;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.second-container>ul>li:hover ~ nav.header.ended.cursor{
+    transform: translate(-50%, -50%) scale(5); opacity: 1; 
+}
+
+.second-container>ul>li.active{
+    color:whitesmoke;
+}
+
+.second-container>p{
+    font-size: 14px;
+    font-family: sans-serif;
+    line-height: 24px;
+    width: 30%;
+    color: #898989;
+    margin-left: 60px;
+    height: 200px;
+}
+
+.third{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100vw;
+    height: 70vh;
+    overflow: hidden;
+}
+
+.third>h1{
+    font-size: 15vw;
+    font-weight: 100;
+    letter-spacing: -6px;
+    color:whitesmoke;
+    margin: 40px 0;
+    padding: 0;
+}
+
+.third>p{
+    column-count: 2;
+    column-gap: 40px;
+    width: 80%;
+    font-size: 13px;
+    font-family: sans-serif;
+    font-weight: 100;
+    line-height: 28px;
+    height: 180px;
+    color: #898989;
+}
+
+.footer{
+    border: none;
+    width: 100%;
+    margin-bottom: 40px;
+    opacity: 1;
+    font-family: sans-serif;
+    font-size: 9px;
+    transition: all 0.8s ease-out 1.1s;
+    bottom: 0;
+    color: antiquewhite;
+    font-weight: 100;
+    opacity: 0.2;
+    text-align: center;
+}
+
+.footer a{
+    text-decoration: none;
+    pointer-events: auto;
+    color: antiquewhite;
+}
+
+@media only screen and (max-width: 660px) {
+    
+
+    .a{
+        padding: 10px;
+        margin-right: 0rem;
+        letter-spacing: 0.3em;
+    }
+
+    .footer{
+        margin-bottom: 20px;
+    }
+    .header>span{
+        padding: 0 1em;
+    }
+
+    .header{
+        font-size: .6em;
+    }
+
+    .main-section .product-display h3{
+        width: 260px;
+        font-size: 42px;
+        margin-left: 30px;
+        line-height: 45px;
+    }
+
+    .first>h1{
+        margin: 0px 10px!important;
+        font-weight: 100;
+        letter-spacing: 0em;
+        font-size: 10vw;
+        
+        max-width: 1000vw!important; /* Ensure it doesn't overflow the viewport */
+    }
+
+    .first>p{
+        width: 85%;
+        line-height: 22px;
+     
+        margin-bottom: 0px;
+            
+        
+    }
+
+    .second-container {
+        padding: 0;
+        justify-content: flex-end;
+    }
+
+    .second-container>ul {
+        margin: 0px 0px 30px 30px;
+        width: 80%;
+    }
+
+    .second-container>ul>li {
+        padding-right: 20px;
+        transition: all 0.8s ease-out;
+        font-size: 20px;
+    }
+
+    .second-container>p {
+        width: 85%;
+        height: 55%;
+        margin-left: 30px;
+        line-height: 21px;
+        margin-bottom: 40px;
+    }
+    .third{
+        display: none;
+    }
+    .third>p {
+        column-count: 1;
+    }
+    
+}
+
+
+
+.win95-popup {
+    position: fixed;
+    bottom: 90px;
+    right: 90px;
+    width: 240px;
+    border: 2px solid #000;
+    background: #c0c0c0;
+    box-shadow: 4px 4px 0 #808080;
+    z-index: 1000;
+    font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+    display: none; /* Start hidden */
+}
+
+/* Header style */
+.win95-header {
+    background: #000080;
+    color: #fff;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Close button style */
+.win95-close {
+    background: #c0c0c0;
+    border: 1px solid #000;
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+/* Content style */
+.win95-content {
+    padding: 15px;
+}
+
+.win95-content p {
+    color: #000;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+/* Resize paragraph inside the signup form */
+
+
+
+.win95-content input[type="email"] {
+    width: 90%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    background: #fff;
+    font-size: 12px;
+}
+
+.win95-content button {
+    padding: 5px 10px;
+    background: #000080;
+    border: 1px solid #000;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.win95-content button:hover {
+    background: #0000ff;
+}
+
+.win95-form-response {
+    color: #000;
+    font-size: 12px;
+    margin-top: 10px;
+    display: none; /* Start hidden */
+}
+
+
+.scroll-down-arrow {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2em;
+    color: #fff;
+    cursor: pointer;
+    animation: bounce 2s infinite;
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+/* Simple bounce animation */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+/* Windows 95-inspired Signup Container */
+.win95-signup-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border: 2px solid #000;
+    background: #c0c0c0;
+    box-shadow: 4px 4px 0 #808080;
+    z-index: 1000;
+    font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+    transform: translateY(100%);
+    transition: transform 0.5s ease-in-out;
+}
+
+.win95-header {
+    background: #000080;
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+}
+
+.win95-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.win95-content p {
+    color: #000;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.win95-content input[type="email"] {
+    width: 90%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    background: #fff;
+    font-size: 12px;
+}
+
+.win95-content button {
+    padding: 5px 10px;
+    background: #000080;
+    border: 1px solid #000;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.win95-content button:hover {
+    background: #0000ff;
+}
+
+.win95-form-response {
+    color: #000;
+    font-size: 12px;
+    margin-top: 10px;
+    display: none;
+}
+
+/* Windows 95 Style Contact Section */
+.win95-container {
+    width: 80%;
+    margin: 50px auto;
+    border: 2px solid #000;
+    background-color: #c0c0c0;
+    box-shadow: 4px 4px 0 #808080;
+    font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+    padding: 20px;
+}
+
+.win95-header {
+    background: #000080;
+    color: #fff;
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #000;
+}
+
+.win95-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.contact-info a {
+    color: #000080;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+.win95-content p {
+    color: #000;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.win95-content h3 {
+    color: #000;
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+/* Windows 95 Button Style */
+.win95-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #c0c0c0;
+    border: 2px solid #000;
+    box-shadow: inset 1px 1px 0 #ffffff, inset -2px -2px 0 #808080;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.win95-button:active {
+    box-shadow:  2px 2px 0 #ffffff, inset -2px -2px 0 #808080;
+}
+
+.win95-button:hover {
+    background-color: #a8a8a8;
+}
+
+
+
+/* npm run dev */
+/* npm run build */
+/* netlify deploy, dist */
